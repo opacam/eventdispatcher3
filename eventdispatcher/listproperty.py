@@ -1,4 +1,4 @@
-__author__ = 'calvin'
+__author__ = "calvin"
 
 try:
     # python >= 3.3
@@ -13,13 +13,20 @@ from . import Property
 
 
 class ObservableList(MutableSequence):
-    def __init__(self, l, dispatch_method, dtype=None):
-        if not type(l) == list and not type(l) == tuple and not isinstance(l, ObservableList):
-            raise ValueError('Observable list must only be initialized with sequences as arguments')
+    def __init__(self, target_list, dispatch_method, dtype=None):
+        if (
+            not type(target_list) == list
+            and not type(target_list) == tuple
+            and not isinstance(target_list, ObservableList)
+        ):
+            raise ValueError(
+                "Observable list must only be initialized "
+                "with sequences as arguments"
+            )
         if dtype:
-            self.list = np.array(l, dtype=dtype)
+            self.list = np.array(target_list, dtype=dtype)
         else:
-            self.list = list(l)
+            self.list = list(target_list)
 
         self.dispatch = dispatch_method
 
@@ -89,41 +96,45 @@ class ObservableList(MutableSequence):
     def __ne__(self, other):
         return self.list != other
 
-    def __nonzero__(self):
-        return bool(self.list)
-
 
 class ListProperty(Property):
-
     def register(self, instance, property_name, value, dtype=None):
-        self.value = ObservableList(value,
-                                    dispatch_method=partial(instance.dispatch, property_name, instance),
-                                    dtype=self._additionals.get('dtype'))
+        self.value = ObservableList(
+            value,
+            dispatch_method=partial(
+                instance.dispatch, property_name, instance
+            ),
+            dtype=self._additionals.get("dtype"),
+        )
         super(ListProperty, self).register(instance, property_name, self.value)
 
     def __set__(self, obj, value):
         p = self.instances[obj]
         # Check if we need to dispatch
-        do_dispatch = len(p['value'].list) != len(value) or not ListProperty.compare_sequences(p['value'], value)
+        do_dispatch = len(p["value"].list) != len(
+            value
+        ) or not ListProperty.compare_sequences(p["value"], value)
         # do_dispatch = not ListProperty.compare_sequences(p['value'], value)
-        p['value'].list[:] = value        # Assign to ObservableList's value
+        p["value"].list[:] = value  # Assign to ObservableList's value
         if do_dispatch:
-            for callback in p['callbacks']:
-                if callback(obj, p['value'].list):
+            for callback in p["callbacks"]:
+                if callback(obj, p["value"].list):
                     break
 
     @staticmethod
     def compare_sequences(iter1, iter2):
         """
-        Compares two iterators to determine if they are equal. Used to compare lists and tuples
-        # """
+        Compares two iterators to determine if they are equal.
+        Used to compare lists and tuples.
+        """
         try:
             for a, b in zip(iter1, iter2):
                 if a != b:
                     return False
         except Exception:
-            # A ValueError is usually raised if comparing numpy arrays because they
-            # return an array of booleans rather than a scalar value.
-            # If any error occurs during comparison just assume they are not equal.
+            # A ValueError is usually raised if comparing numpy arrays because
+            # they return an array of booleans rather than a scalar value.
+            # If any error occurs during comparison just assume they are not
+            # equal.
             return False
         return True
