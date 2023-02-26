@@ -20,4 +20,9 @@ setup(
     install_requires=['future',
                       'numpy'
                       ],
+    extras_require={
+        'dev': [
+            'pytest',
+        ]
+    }
 )
