@@ -1,5 +1,9 @@
 __author__ = 'calvin'
-import collections
+try:
+    # python >= 3.3
+    from collections.abc import MutableMapping
+except ImportError:
+    from collections import MutableMapping
 from future.utils import iteritems, iterkeys, itervalues
 from functools import partial
 from . import Property
@@ -10,7 +14,7 @@ class __DoesNotExist__:
     pass
 
 
-class ObservableDict(collections.MutableMapping):
+class ObservableDict(MutableMapping):
 
     def __init__(self, dictionary, dispatch_method):
         self.dictionary = dictionary.copy()

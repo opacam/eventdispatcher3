@@ -1,6 +1,10 @@
 __author__ = 'calvin'
 
-import collections
+try:
+    # python >= 3.3
+    from collections.abc import MutableSequence
+except ImportError:
+    from collections import MutableSequence
 from functools import partial
 from copy import copy
 import numpy as np
@@ -8,7 +12,7 @@ import numpy as np
 from . import Property
 
 
-class ObservableList(collections.MutableSequence):
+class ObservableList(MutableSequence):
     def __init__(self, l, dispatch_method, dtype=None):
         if not type(l) == list and not type(l) == tuple and not isinstance(l, ObservableList):
             raise ValueError('Observable list must only be initialized with sequences as arguments')
