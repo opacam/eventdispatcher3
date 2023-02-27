@@ -1,6 +1,10 @@
+from typing import List
 
-
-__all__ = ['EventDispatcherException', 'BindError', 'InvalidOptionError']
+__all__: List[str] = [
+    "EventDispatcherException",
+    "BindError",
+    "InvalidOptionError",
+]
 
 
 class EventDispatcherException(Exception):
@@ -12,9 +16,12 @@ class BindError(EventDispatcherException):
 
 
 class InvalidOptionError(EventDispatcherException):
-    def __init__(self, value, options):
+    def __init__(self, value: str, options: List[str]) -> None:
         self.value = value
         self.options = options
 
-    def __str__(self):
-        return "'%s' is not one of the following allowed options: %s" % (self.value, [i for i in self.options])
+    def __str__(self) -> str:
+        return (
+            f"'{self.value}' is not one of the following allowed options:"
+            f"{[i for i in self.options]}"
+            )
