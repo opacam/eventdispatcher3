@@ -1,4 +1,4 @@
-__author__ = 'calvin'
+__author__ = "calvin"
 
 from copy import deepcopy
 
@@ -8,10 +8,11 @@ from weakref import ref
 
 class WeakRefProperty(Property):
     """
-    Property that stores it's values as weak references in order to facilitate garbage collection.
+    Property that stores it's values as weak references in order to facilitate
+    garbage collection.
     """
 
-    def __init__(self, default_value, **additionals):
+    def __init__(self, default_value: any, **additionals: dict) -> None:
         self.instances = {}
         try:
             self.default_value = ref(default_value)
@@ -23,22 +24,24 @@ class WeakRefProperty(Property):
             self.value = None
         self._additionals = additionals
 
-    def __get__(self, obj, objtype=None):
-        value = obj.event_dispatcher_properties[self.name]['value']
+    def __get__(self, obj: any, objtype: type = None) -> any:
+        value = obj.event_dispatcher_properties[self.name]["value"]
         if value:
             return value()
         else:
             return value
 
-    def __set__(self, obj, value):
+    def __set__(self, obj: any, value: any) -> None:
         wr = ref(value) if value is not None else None
-        if wr != obj.event_dispatcher_properties[self.name]['value']:
+        if wr != obj.event_dispatcher_properties[self.name]["value"]:
             prop = obj.event_dispatcher_properties[self.name]
-            prop['value'] = wr
-            for callback in prop['callbacks']:
+            prop["value"] = wr
+            for callback in prop["callbacks"]:
                 if callback(obj, value):
                     break
 
-    def register(self, instance, property_name, default_value):
+    def register(
+        self, instance: any, property_name: str, default_value: any
+    ) -> None:
         wr = None if default_value is None else ref(default_value)
         super(WeakRefProperty, self).register(instance, property_name, wr)
