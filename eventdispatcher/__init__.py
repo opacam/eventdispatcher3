@@ -1,4 +1,5 @@
 import json
+from typing import Any
 
 from .eventdispatcher import EventDispatcher
 from .property import Property
@@ -22,9 +23,9 @@ class PropertyEncoder(json.JSONEncoder):
     Encoder that helps with the JSON serializing of properties. In particular, ObservableDict and ObservableList
     """
 
-    def default(self, o):
+    def default(self, o: Any) -> Any:
         try:
-            r = super(PropertyEncoder, self).default(o)
+            r = super().default(o)
         except TypeError as e:
             if isinstance(o, ObservableList):
                 return o.list
