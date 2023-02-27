@@ -1,17 +1,27 @@
+[![Python 3.6](https://img.shields.io/badge/python-3.6-orange.svg)](https://www.python.org/downloads/release/python-360/)
+[![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-370/)
+[![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-380/)
+[![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-390/)
+[![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-310/)
+[![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-311/)
+
 EventDispatcher3
 ================
 
-An event dispatcher framework inspired by the [Kivy project](http://kivy.org/#home).
+Eventdispatcher3 is an event dispatcher framework inspired by the
+[Kivy project](http://kivy.org/#home). It enables developers to create
+and dispatch events independent of any user interface or underlying application
+architecture. With Eventdispatcher3, you can easily respond to custom events
+within your application.
 
-Property instances are monitored and dispatch events when their value changes. The event callback handler name defaults to `on_PROPERTY_NAME` and is
-called with two arguments: the dispatcher instance and the value of the property.
+Eventdispatcher3 is a fork of the original project:
+[lobocv/eventdispatcher](https://github.com/lobocv/eventdispatcher). It has
+been tailored to address a few key changes, including support for latest python
+versions and also drops support for the older ones.
 
-> :warning:
-> This is a fork of [lobocv/eventdispatcher](https://github.com/lobocv/eventdispatcher).
-> The reason to create this fork is to grant support to newer versions of python,
-> since it seems that the original repository it has been untouched for a
-> while. We will keep supporting older versions of python, but we cannot
-> guarantee that, since we already have the original repository.
+Property instances are monitored and dispatch events when their value changes.
+The event callback handler name defaults to `on_PROPERTY_NAME` and is called
+with two arguments: the dispatcher instance and the value of the property.
 
 Installation
 ============
@@ -50,15 +60,15 @@ We can create a EventDispatcher class that can automatically update the file wit
 
         def on_last_login(self, inst, last_login):
             # Default handler for the last_login property
-            print 'last login was %s' % last_login
+            print('last login was %s' % last_login)
 
         def on_color(self, inst, color):
             # Default handler for the color property
-            print 'color has been set to %s' % color
+            print('color has been set to %s' % color)
 
         def update_settings_file(self, *args):
             # Update the file with the latest settings.
-            print 'Updating settings file.'
+            print('Updating settings file.')
             self.number_of_file_updates += 1
             with open(self.filepath, 'w') as _f:
                 settings = {'last_login': self.last_login, 'favourite_color': self.favourite_color}
