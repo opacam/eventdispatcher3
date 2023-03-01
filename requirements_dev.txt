@@ -1,3 +1,4 @@
 future
 numpy
 pytest
+pytest-cov
