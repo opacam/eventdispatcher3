@@ -32,7 +32,7 @@ jobs:
 
     # The following step will only be run for python 3.11.2
     - name: Upload coverage report to Codecov
-      if: matrix.python-version == 3.11.2
+      if: matrix.python-version == '3.11.2'
       uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
