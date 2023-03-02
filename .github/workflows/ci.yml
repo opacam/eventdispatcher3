@@ -26,6 +26,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements_dev.txt
 
-    - name: Run tests
+    - name: Run tests with coverage
       run: |
-        pytest
+        pytest --cov=eventdispatcher --cov-report term-missing
+
