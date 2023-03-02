@@ -1,4 +1,5 @@
 ![Python CI](https://github.com/opacam/eventdispatcher3/actions/workflows/ci.yml/badge.svg)
+[![codecov](https://codecov.io/github/opacam/eventdispatcher3/branch/main/graph/badge.svg?token=MTME584MDG)](https://codecov.io/github/opacam/eventdispatcher3)
 [![Python 3.6](https://img.shields.io/badge/python-3.6-orange.svg)](https://www.python.org/downloads/release/python-360/)
 [![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-370/)
 [![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-380/)
